@@ -1,0 +1,172 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf600
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 -- phpMyAdmin SQL Dump\
+-- version 4.9.0.1\
+-- https://www.phpmyadmin.net/\
+--\
+-- H\'f4te : localhost:8889\
+-- G\'e9n\'e9r\'e9 le :  Dim 29 d\'e9c. 2019 \'e0 16:21\
+-- Version du serveur :  5.7.26\
+-- Version de PHP :  7.3.8\
+\
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";\
+SET time_zone = "+00:00";\
+\
+--\
+-- Base de donn\'e9es :  `locationdb`\
+--\
+\
+-- --------------------------------------------------------\
+\
+--\
+-- Structure de la table `tclient`\
+--\
+\
+CREATE TABLE `tclient` (\
+  `idClient` int(11) NOT NULL,\
+  `nom` varchar(100) NOT NULL,\
+  `prenoms` varchar(150) NOT NULL,\
+  `adresse` varchar(150) NOT NULL,\
+  `sexe` varchar(1) NOT NULL,\
+  `telephone` int(10) NOT NULL,\
+  `email` varchar(80) NOT NULL,\
+  `pass` varchar(60) NOT NULL,\
+  `login` varchar(60) NOT NULL\
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;\
+\
+-- --------------------------------------------------------\
+\
+--\
+-- Structure de la table `tfacturation`\
+--\
+\
+CREATE TABLE `tfacturation` (\
+  `idFacturaction` int(8) NOT NULL,\
+  `destination` varchar(40) NOT NULL,\
+  `nombreJours` int(2) NOT NULL,\
+  `dateDebutLocation` date NOT NULL,\
+  `id_voiture` varchar(8) NOT NULL,\
+  `id_client` int(11) NOT NULL\
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;\
+\
+-- --------------------------------------------------------\
+\
+--\
+-- Structure de la table `tmodele`\
+--\
+\
+CREATE TABLE `tmodele` (\
+  `idModele` int(8) NOT NULL,\
+  `libelle` varchar(100) CHARACTER SET utf8 NOT NULL\
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;\
+\
+-- --------------------------------------------------------\
+\
+--\
+-- Structure de la table `tuser`\
+--\
+\
+CREATE TABLE `tuser` (\
+  `login` varchar(60) NOT NULL,\
+  `pass` varchar(40) NOT NULL\
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;\
+\
+--\
+-- D\'e9chargement des donn\'e9es de la table `tuser`\
+--\
+\
+INSERT INTO `tuser` (`login`, `pass`) VALUES\
+('admin', '@dmin'),\
+('al', '@al'),\
+('kds', '@kds'),\
+('lass', '@lass');\
+\
+-- --------------------------------------------------------\
+\
+--\
+-- Structure de la table `tVoiture`\
+--\
+\
+CREATE TABLE `tVoiture` (\
+  `immatriculation` varchar(10) NOT NULL,\
+  `couleur` varchar(10) NOT NULL,\
+  `kilometrage` int(5) NOT NULL,\
+  `prixJournalier` int(5) NOT NULL,\
+  `disponibilite` tinyint(1) NOT NULL,\
+  `marque` varchar(60) NOT NULL\
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;\
+\
+--\
+-- Index pour les tables d\'e9charg\'e9es\
+--\
+\
+--\
+-- Index pour la table `tclient`\
+--\
+ALTER TABLE `tclient`\
+  ADD PRIMARY KEY (`idClient`);\
+\
+--\
+-- Index pour la table `tfacturation`\
+--\
+ALTER TABLE `tfacturation`\
+  ADD PRIMARY KEY (`idFacturaction`),\
+  ADD KEY `id_voiture` (`id_voiture`),\
+  ADD KEY `id_client` (`id_client`);\
+\
+--\
+-- Index pour la table `tmodele`\
+--\
+ALTER TABLE `tmodele`\
+  ADD PRIMARY KEY (`idModele`);\
+\
+--\
+-- Index pour la table `tuser`\
+--\
+ALTER TABLE `tuser`\
+  ADD PRIMARY KEY (`login`);\
+\
+--\
+-- Index pour la table `tVoiture`\
+--\
+ALTER TABLE `tVoiture`\
+  ADD PRIMARY KEY (`immatriculation`);\
+\
+--\
+-- AUTO_INCREMENT pour les tables d\'e9charg\'e9es\
+--\
+\
+--\
+-- AUTO_INCREMENT pour la table `tclient`\
+--\
+ALTER TABLE `tclient`\
+  MODIFY `idClient` int(11) NOT NULL AUTO_INCREMENT;\
+\
+--\
+-- AUTO_INCREMENT pour la table `tfacturation`\
+--\
+ALTER TABLE `tfacturation`\
+  MODIFY `idFacturaction` int(8) NOT NULL AUTO_INCREMENT;\
+\
+--\
+-- AUTO_INCREMENT pour la table `tmodele`\
+--\
+ALTER TABLE `tmodele`\
+  MODIFY `idModele` int(8) NOT NULL AUTO_INCREMENT;\
+\
+--\
+-- Contraintes pour les tables d\'e9charg\'e9es\
+--\
+\
+--\
+-- Contraintes pour la table `tfacturation`\
+--\
+ALTER TABLE `tfacturation`\
+  ADD CONSTRAINT `tfacturation_ibfk_1` FOREIGN KEY (`id_voiture`) REFERENCES `tvoiture` (`immatriculation`),\
+  ADD CONSTRAINT `tfacturation_ibfk_2` FOREIGN KEY (`id_client`) REFERENCES `tclient` (`idClient`);\
+}
